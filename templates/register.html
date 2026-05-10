@@ -40,6 +40,27 @@
     </div>
 </div>
 
-<script src="/static/script.js"></script>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('fullname', document.getElementById('fullname').value);
+        formData.append('phone', document.getElementById('phone').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('password', document.getElementById('password').value);
+        
+        const response = await fetch('/register', { method: 'POST', body: formData });
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Регистрация успешна! Теперь войдите.');
+            window.location.href = '/login-user';
+        } else {
+            alert(result.error || 'Ошибка регистрации');
+        }
+    });
+</script>
+
 </body>
 </html>
